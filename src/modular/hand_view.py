@@ -16,6 +16,7 @@ class FunctionManager:
 function_manager = FunctionManager()
 
 @function_manager(func_name="hand_test")
-def hand_test(data):
-    print(data)
+def hand_test(**kwargs):
+    print(kwargs)
+    return kwargs
 
