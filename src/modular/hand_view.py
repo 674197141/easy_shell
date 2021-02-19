@@ -20,3 +20,13 @@ def hand_test(**kwargs):
     print(kwargs)
     return kwargs
 
+
+@function_manager(func_name="comd")
+def comd(ip,port,pas,name = "",**kwargs):
+    if name == "":
+        pass
+    return "1"
+
+@function_manager(func_name="connect")
+def connect(ip="",port=0,name="",save=0,**kwargs):
+    pass
