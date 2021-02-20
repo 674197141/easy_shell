@@ -18,3 +18,6 @@ class Server(DbTableBase):
     def __repr__(self):
         return "<Server(ip='%s', fullname='%s', password='%s')>" % (
                    self.ip, self.name, self.password)
+    
+    def to_str(self):
+        return f"{self.id}  {self.ip}  {self.port}  {self.name}  {self.password}  {self.group}  {self.user_name}"

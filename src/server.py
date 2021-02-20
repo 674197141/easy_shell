@@ -34,6 +34,8 @@ def run_cmd():
         if s == "exit":
             print("-------- exit app --------")
             return
+        if s == "":
+            continue
         # 先取第一个参数是基本命令
         cmd_commd = s.split(" ")[0]
         s = s.replace(cmd_commd,"")

@@ -31,7 +31,7 @@ def comd(command,ip = "",port = 22,password = "",user_name = "root",name = "",sa
         status,msg =sc.ssh_login(ip, port,user_name,password)
         if status != 1000:
             return msg
-        if save == 1:
+        if int(save) == 1:
             res = manager.save_server(ip,port,password,user_name,name)
     elif name != "":
         # 通过别名连接
@@ -47,3 +47,7 @@ def comd(command,ip = "",port = 22,password = "",user_name = "root",name = "",sa
     res = stdout.read()
     sc.close()
     return res
+
+@function_manager(func_name="server_all")
+def server_all(**kwargs):
+    return manager.get_all_server()
