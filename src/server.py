@@ -22,8 +22,29 @@ class EchoArgs(BaseModel):
     arg:dict = {} # 其他参数
 
 @app.post("/msg")
-async def func_hand(*,arg:EchoArgs):
+def func_hand(*,arg:EchoArgs):
     res = function_manager.func_dc[arg.msg](**arg.arg)
     return {
         "res":res
         }
+
+def run_cmd():
+    while True:
+        s = input(">>>")
+        if s == "exit":
+            print("-------- exit app --------")
+            return
+        # 先取第一个参数是基本命令
+        cmd_commd = s.split(" ")[0]
+        s = s.replace(cmd_commd,"")
+        s = s.strip()
+        # 然后是附加参数
+        kwargs_dc = {}
+        cmd_args = s.split("-")
+        for arg in cmd_args:
+            if arg == "":
+                continue
+            s_l = arg.split(" ")
+            kwargs_dc[s_l[0]] = s_l[1]
+        res = function_manager.func_dc[cmd_commd](**kwargs_dc)
+        print(res)

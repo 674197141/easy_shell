@@ -9,7 +9,7 @@ class Server(DbTableBase):
     
     id = Column(Integer,primary_key=True)
     ip = Column(String)
-    port = Column(Integer(5))
+    port = Column(Integer)
     name = Column(String(20))
     password = Column(String(32))
     group = Column(String(64))

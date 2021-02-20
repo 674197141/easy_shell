@@ -27,11 +27,12 @@ def hand_test(**kwargs):
 def comd(command,ip = "",port = 22,password = "",user_name = "root",name = "",save=0,**kwargs):
     res = "err"
     sc = SShClient()
-    if save == 1 and ip != "":
+    if ip != "":
         status,msg =sc.ssh_login(ip, port,user_name,password)
         if status != 1000:
             return msg
-        res = manager.save_server(ip,port,password,user_name,name)
+        if save == 1:
+            res = manager.save_server(ip,port,password,user_name,name)
     elif name != "":
         # 通过别名连接
         s,data = manager.get_server(name)

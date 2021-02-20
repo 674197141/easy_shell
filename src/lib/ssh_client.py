@@ -17,8 +17,9 @@ class SShClient(SSHClient):
             logging.warning('connect time out')
             return 1002,'connect time out'
         except:
-            print("Unexpected error:", sys.exc_info()[0])
-            return 1003,"Unexpected error:"+sys.exc_info()[0]
+            err_str = "Unexpected error: " + str(sys.exc_info()[0])
+            logging.error(err_str)
+            return 1003,err_str
         return 1000,"ok"
  
     def execute_some_command(self, command):
