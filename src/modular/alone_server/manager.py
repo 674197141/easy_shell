@@ -1,6 +1,7 @@
 from sqlalchemy.sql.functions import user
 from server import session
 from data.db import Server
+import psutil
 
 def save_server(ip,port,password,user_name,name):
     # 以ip和用户名为唯一标识
@@ -26,8 +27,16 @@ def get_server(name):
         return 1001,f"未找到：{name}对应的数据"
     return 1000,server_data
 
-def get_all_server():
-    server_data = session.query(Server).all()
+def get_all_server(name = "",group = ""):
+    server_query = session.query(Server)
+    filter_list = []
+    if name != "":
+        filter_list.append(Server.name == name)
+    if group != "":
+        filter_list.append(Server.group == group)
+    if len(filter_list)>0:
+        server_query = server_query.filter(*filter_list)
+    server_data = server_query.all()
     server_list = [
         "id         ip     port     name     password     group    user_name"
         ]
@@ -35,3 +44,10 @@ def get_all_server():
         server_list.append(server.to_str())
     p_str = "\n".join(server_list)
     return p_str
+
+def get_top():
+    pass
+
+def get_memory():
+    mem = psutil.virtual_memory()
+    return mem

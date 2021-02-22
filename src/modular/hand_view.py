@@ -1,4 +1,5 @@
 from loguru import logger
+from sqlalchemy.sql.functions import func
 from modular.alone_server import manager
 from lib.ssh_client import SShClient
 
@@ -7,17 +8,19 @@ class FunctionManager:
     def __init__(self):
         logger.info("初始化回调")
         self.func_dc = {}
+        self.func_explain = {}
 
-    def __call__(self, func_name, *args, **kwargs):
+    def __call__(self, func_name,func_explain="", *args, **kwargs):
         def register(cls):
             self.func_dc[func_name] = cls
+            self.func_explain[func_name] = func_explain
             return cls
         return register
 
 
 function_manager = FunctionManager()
 
-@function_manager(func_name="hand_test")
+@function_manager(func_name="hand_test",func_explain="测试")
 def hand_test(**kwargs):
     print(kwargs)
     return kwargs
@@ -48,6 +51,17 @@ def comd(command,ip = "",port = 22,password = "",user_name = "root",name = "",sa
     sc.close()
     return res
 
-@function_manager(func_name="server_all")
-def server_all(**kwargs):
-    return manager.get_all_server()
+
+@function_manager(func_name="get_server",func_explain="获取服务器列表")
+def server_all(name = "",group="",**kwargs):
+    return manager.get_all_server(name,group)
+
+
+@function_manager(func_name="get_cpu",func_explain="获取服务器cpu负载")
+def get_top(**kwargs):
+    return manager.get_top()
+
+
+@function_manager(func_name="get_memory",func_explain="获取内存")
+def get_memory(**kwargs):
+    return manager.get_memory()

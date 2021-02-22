@@ -18,3 +18,4 @@ starlette==0.12.9
 uvicorn==0.11.1
 websockets==8.1
 win32-setctime==1.0.3
+psutil
