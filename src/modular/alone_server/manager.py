@@ -2,6 +2,7 @@ from sqlalchemy.sql.functions import user
 from server import session
 from data.db import Server
 import psutil
+import json
 
 def save_server(ip,port,password,user_name,name):
     # 以ip和用户名为唯一标识
@@ -50,4 +51,13 @@ def get_top():
 
 def get_memory():
     mem = psutil.virtual_memory()
-    return mem
+    res = {
+        "total":mem.total,
+        "used":mem.used,
+        "mem.free":mem.free
+    }
+    return res
+
+def get_cpu_percent():
+    cpu = psutil.cpu_percent()
+    return cpu

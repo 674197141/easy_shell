@@ -23,10 +23,15 @@ class EchoArgs(BaseModel):
 
 @app.post("/msg")
 def func_hand(*,arg:EchoArgs):
-    res = function_manager.func_dc[arg.msg](**arg.arg)
+    if arg.msg.startswith("group"):
+        func_name = arg.msg.replace("group","")
+        res = function_manager.call_group(func_name,**arg.arg)
+    else:
+        res = function_manager.func_dc[arg.msg](**arg.arg)
     return {
         "res":res
         }
+
 
 def run_cmd():
     while True:

@@ -17,6 +17,9 @@ class FunctionManager:
             return cls
         return register
 
+    def call_group(self,func_name,**kwargs):
+        self.func_dc[func_name](**kwargs)
+
 
 function_manager = FunctionManager()
 
@@ -65,3 +68,7 @@ def get_top(**kwargs):
 @function_manager(func_name="get_memory",func_explain="获取内存")
 def get_memory(**kwargs):
     return manager.get_memory()
+
+@function_manager(func_name="get_cpu_percent",func_explain="获取cpu相关信息")
+def get_cpu_percent(**kwargs):
+    return manager.get_cpu_percent()
